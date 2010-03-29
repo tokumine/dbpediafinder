@@ -1,5 +1,5 @@
 Gem::Specification.new do |s|
-  s.name = "dbpediafinder"
+  s.name = "ppe-dbpediafinder"
   s.version = "0.0.1"
   s.date = "2009-11-19"
   s.summary = "DBpedia finder"
