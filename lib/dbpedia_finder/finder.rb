@@ -40,7 +40,7 @@ module DbpediaFinder
         query = "\"#{label}\" site:en.wikipedia.org"
       end
       query = URI.encode(query)
-      google_url_s = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=#{query}"
+      google_url_s = "http://ajax.googleapis.com/ajax/services/search/web?v=1.0&key=ABQIAAAAdc829JdHWtQwsQprwWSx5xS3Ndh9OqKhjcL5Rj0GT3CtgkzZLRQSROHz2l0G6XpYssegQwHlH8Jseg&q=#{query}"
       url = URI.parse(google_url_s)
       if @proxy
         h = Net::HTTP::Proxy(@proxy.host, @proxy.port).new(url.host, url.port)
@@ -50,7 +50,11 @@ module DbpediaFinder
       h.start do |h|
         res = h.get(url.path + "?" + url.query)
         json = JSON.parse(res.body)
-        results = json["responseData"]["results"].map { |result| result["url"] }
+        begin
+          results = json["responseData"]["results"].map { |result| result["url"] }
+        rescue 
+          return ""
+        end                  
         return results
       end
     end
